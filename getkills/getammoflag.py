@@ -51,7 +51,10 @@ def now(mongohandle, typeid):
     }
 
     groupid = mongoconn.get_groupid_from_typeid(mongohandle, typeid)
-    return ammogroups.get(groupid, 0)
+    if groupid is not None:
+        return ammogroups.get(groupid, 0)
+    else:
+        return 0
 
 if __name__ == "__main__":
     testhandle = mongoconn.connect()
