@@ -10,18 +10,18 @@ def get_mail():
         killmail = rawkillmail.json()
         return killmail
     except requests.exceptions.Timeout as err:
-        print(tstp.now(), 'getMail - Timeout error - exiting')
+        print(tstp.now(), 'zkillboard - Timeout error - exiting')
         print(err)
         sys.exit()
     except requests.exceptions.TooManyRedirects as err:
-        print(tstp.now(), 'getMail - Redirect error - exiting')
+        print(tstp.now(), 'zkillboard - Redirect error - exiting')
         print(err)
         sys.exit()
     except requests.exceptions.RequestException as err:
-        print(tstp.now(), 'getMail - Request error - exiting')
+        print(tstp.now(), 'zkillboard - Request error - exiting')
         print(err)
         sys.exit()
     except ValueError as err:
-        print(tstp.now(), 'getMail - Value error - exiting')
+        print(tstp.now(), 'zkillboard - Value error - exiting')
         print(err)
         sys.exit()
