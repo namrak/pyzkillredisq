@@ -17,7 +17,7 @@ def process_zkill_redisq():
     time.sleep(1)
     icount = 0
     while True:
-        kmail = zkill.get_mail()
+        kmail = zkill.get_mail(logfile)
         if 'package' in kmail:
             if kmail['package'] is None:
                 print(tstp.now(), 'Main - Empty Killmail - exiting')
@@ -39,8 +39,8 @@ def process_zkill_redisq():
                 else:
                     ship = kmail['package']['killmail']['victim']['shipType']['id']
                 print(tstp.now(), 'Main -', icount, 'Info:', corp, ':', ship)
-                mail2insert = parse.killmail(mongohandle, kmail)
-                mongoconn.insert2mongo(mongohandle, mail2insert)
+                mail2insert = parse.killmail(mongohandle, logfile, kmail)
+                mongoconn.insert2mongo(mongohandle, logfile, mail2insert)
         else:
             print(time.strftime('%m/%d %H:%M:%S'), 'Main - Error: No package - exiting')
             errorlog = (tstp.now() + ' Log - No package - ' + str(icount) + '\n')
