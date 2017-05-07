@@ -2,7 +2,7 @@ from pymongo import MongoClient, errors
 import tstp
 from mdb import creds
 
-def connect():
+def connect(logfile):
     """connect to mongodb"""
     try:
         client = MongoClient(creds['ip'], int(creds['port']))
@@ -11,20 +11,20 @@ def connect():
         return db
     except errors.ServerSelectionTimeoutError as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Timeout Error - Aborting')
-        timeoutlog = (tstp.now() + ' Log - Server timeout - ' + str(icount) + '\n')
-        logfile.write(timeoutlog)
+        log = (tstp.now() + ' Log - Server timeout - ' + '\n')
+        logfile.write(log)
         logfile.write(err)
         logfile.close()
         sys.exit()
     except errors.ConnectionFailure as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Connection Failure - Aborting')
-        failconnlog = (tstp.now() + ' Log - Failed connection - ' + str(icount) + '\n')
-        logfile.write(failconnlog)
+        log = (tstp.now() + ' Log - Failed connection - ' + '\n')
+        logfile.write(log)
         logfile.write(err)
         logfile.close()
         sys.exit()
 
-def insert2mongo(mongohandle, killmail):
+def insert2mongo(mongohandle, logfile, killmail):
     """insert formatted killmail to mongodb"""
     try:
         allkills = mongohandle.allkills
@@ -32,20 +32,20 @@ def insert2mongo(mongohandle, killmail):
         return 0
     except errors.ServerSelectionTimeoutError as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Timeout Error - Aborting')
-        timeoutlog = (tstp.now() + ' Log - Server timeout - ' + str(icount) + '\n')
-        logfile.write(timeoutlog)
+        log = (tstp.now() + ' Log - Server timeout - ' + '\n')
+        logfile.write(log)
         logfile.write(err)
         logfile.close()
         sys.exit()
     except errors.ConnectionFailure as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Connection Failure - Aborting')
-        failconnlog = (tstp.now() + ' Log - Failed connection - ' + str(icount) + '\n')
-        logfile.write(failconnlog)
+        log = (tstp.now() + ' Log - Failed connection - ' + '\n')
+        logfile.write(log)
         logfile.write(err)
         logfile.close()
         sys.exit()
 
-def get_groupid_from_typeid(mongohandle, typeid):
+def get_groupid_from_typeid(mongohandle, logfile, typeid):
     """get item name from typeid db"""
     try:
         typeids = mongohandle.typeIDs
@@ -57,14 +57,14 @@ def get_groupid_from_typeid(mongohandle, typeid):
             return 0
     except errors.ServerSelectionTimeoutError as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Timeout Error - Aborting')
-        timeoutlog = (tstp.now() + ' Log - Server timeout - ' + str(icount) + '\n')
+        timeoutlog = (tstp.now() + ' Log - Server timeout - ' + '\n')
         logfile.write(timeoutlog)
         logfile.write(err)
         logfile.close()
         sys.exit()
     except errors.ConnectionFailure as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Connection Failure - Aborting')
-        failconnlog = (tstp.now() + ' Log - Failed connection - ' + str(icount) + '\n')
+        failconnlog = (tstp.now() + ' Log - Failed connection - ' + '\n')
         logfile.write(failconnlog)
         logfile.write(err)
         logfile.close()
