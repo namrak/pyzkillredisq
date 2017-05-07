@@ -2,7 +2,7 @@ import json
 import sys
 import mongoconn
 
-def now(mongohandle, typeid):
+def now(mongohandle, logfile, typeid):
     """return 1 if typeid is in ammo group"""
     ammogroups = {
         83: 1,
@@ -50,11 +50,12 @@ def now(mongohandle, typeid):
         1774: 1,
     }
 
-    groupid = mongoconn.get_groupid_from_typeid(mongohandle, typeid)
+    groupid = mongoconn.get_groupid_from_typeid(mongohandle, logfile, typeid)
     return ammogroups.get(groupid, 0)
     
 
 if __name__ == "__main__":
-    testhandle = mongoconn.connect()
-    testarg = now(testhandle, int(sys.argv[1]))
+    testlogfile = open('testlog.txt', 'a+')
+    testhandle = mongoconn.connect(testlogfile)
+    testarg = now(testhandle, testlogfile, int(sys.argv[1]))
     print(testarg)

@@ -9,9 +9,9 @@ import mongoconn
 
 def process_zkill_redisq():
     """start download and processing of zkillboard redisq queue"""
-    mongohandle = mongoconn.connect()
-    print(tstp.now(), 'Main - Connecting to MongoDB - waiting 1 second')
     logfile = open('fpLog.txt', 'a+')
+    mongohandle = mongoconn.connect(logfile)
+    print(tstp.now(), 'Main - Connecting to MongoDB - waiting 1 second')
     startlog = (tstp.now() + ' Log - Begin processing of killmails\n')
     logfile.write(startlog)
     time.sleep(1)

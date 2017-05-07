@@ -11,7 +11,7 @@ def strtime2unix(strtime):
     utime = calendar.timegm(time.strptime(strtime, '%Y.%m.%d %H:%M:%S'))
     return utime
 
-def killmail(mongohandle, jsonmail):
+def killmail(mongohandle, logfile, jsonmail):
     """process killmail to package with selected info
     create a hash of fitted non-ammo items for comparison"""
     fpmail = {}
@@ -58,7 +58,7 @@ def killmail(mongohandle, jsonmail):
             imail['name'] = item['itemType']['name']
         else:
             imail['name'] = None
-        isammo = getammoflag.now(mongohandle, item['itemType']['id'])
+        isammo = getammoflag.now(mongohandle, logfile, item['itemType']['id'])
         if isammo == 1:
             imail['is_ammo'] = True
         else:
