@@ -1,4 +1,5 @@
 from pymongo import MongoClient, errors
+import tstp
 from mdb import creds
 
 def connect():
@@ -52,8 +53,8 @@ def get_groupid_from_typeid(mongohandle, typeid):
         if cursor is not None:
             return cursor['groupID']
         else:
-            print(str(typeid))
-            return None
+            print(tstp.now() + '!!ERROR!! Group ID not found for Type ID: ' + str(typeid) + '\n')
+            return 0
     except errors.ServerSelectionTimeoutError as err:
         print(time.strftime('%m/%d %H:%M:%S'), 'Timeout Error - Aborting')
         timeoutlog = (tstp.now() + ' Log - Server timeout - ' + str(icount) + '\n')
